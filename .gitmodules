@@ -1,0 +1,6 @@
+[submodule "jackit"]
+	path = jackit
+	url = https://github.com/insecurityofthings/jackit
+[submodule "mousejack"]
+	path = mousejack
+	url = https://github.com/SecurityWard/MouseJack
