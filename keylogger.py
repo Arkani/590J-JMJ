@@ -34,7 +34,9 @@ def main():
 
     ip_data = {'api_dev_key': dev_key,
                'api_option': 'paste',
-               'api_paste_code': str(ip)}
+               'api_paste_code': str(ip),
+               # 'api_paste_private': 0,
+               'api_paste_name': 'url_test'}
 
     key_url = requests.post(url=pastebin_url, data=ip_data)
 
@@ -62,7 +64,9 @@ def main():
 
     key_data = {'api_dev_key': dev_key,
                 'api_option': 'paste',
-                'api_paste_code': outstring}
+                'api_paste_code': outstring,
+                'api_paste_private': 0,
+                'api_paste_name': 'key_test'}
     key_url = requests.post(url=pastebin_url, data=key_data)
     print(ip_url.text)
     print(key_url.text)
