@@ -14,7 +14,7 @@ def decrypt(ciphertext):
     cipher2 = PKCS1_OAEP.new(pkey)
     result = cipher2.decrypt(data)
     outfile = open("./keylogger_data.txt", "w")  # save decryption to file
-    outfile.write(result.decode)
+    outfile.write(result.decode("utf-8"))
     print(result)  # print decryption
 
 
